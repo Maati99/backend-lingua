@@ -76,23 +76,26 @@ const prods = async()=>{
              return
         }
 
+        getall()
+
      // FILTRADO POR ID EN CONSOLA
         getById = async() => {
             try{
             let filtrado = await URL.product.filter((e)=>{ return e.id === 3 } );
-            return console.log(filtrado)
+            console.log(filtrado)
+            return
             }
             catch{
                 console.log('ERROR NO SE PUDO FILTRAR')
             }
         }
 
-       getall()
+     //   getById()
 
-        getById()
 		    setTimeout(() => {
 		    URL.deleteAll();
 		    }, 20000);
+
 
     URL.deleteById();
 	}
@@ -105,5 +108,6 @@ const prods = async()=>{
 
 prods()
 
+module.exports = Contenedor
 
 
