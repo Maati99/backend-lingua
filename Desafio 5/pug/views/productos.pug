@@ -1,0 +1,21 @@
+extends template
+
+block productos
+    if productos.length == 0
+        div(class="alert alert-warning" role="alert")="No se encontraron productos"
+            form(action="/" class="d-flex justify-content-center mt-3")
+                input(type="submit" value="Volver" class="btn btn-primary")
+
+    if productos
+        div(class="container")
+            h1(class="text-center text-danger")="PRODUCTOS"
+            ul(class="list-group")
+                each produ in productos
+                    li(class="list-group-item")
+                        img(class="card-img-top w-25" src=produ.thumbnail)
+                        h2=produ.title
+                        h2=produ.price
+                        form(action="/" class="d-flex justify-content-center mt-3")
+        div(class="d-flex flex-row justify-content-center m-3")
+            a(class="btn btn-primary" href="/")="Volver"
+

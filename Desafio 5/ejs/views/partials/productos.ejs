@@ -1,0 +1,30 @@
+<%- include('../layouts/main.ejs') -%>
+
+<% if(productos.length == 0){ %>
+    <div class="alert alert-warning" role="alert">
+        No se encontraron productos
+    </div>
+    <form action="/" class="d-flex justify-content-center mt-3">
+        <input type="submit" value="Volver" class="btn btn-primary">
+    </form>
+<% } %>
+
+<% if(productos.length > 0){ %>
+    <div class="container">
+        <h1 class="text-center text-danger">PRODUCTOS</h1>
+    <ul class="list-group">
+        <% for(var i=0; i < productos.length; i++) {%>
+            <li class="list-group-item">
+                <img class="card-img-top w-25" src=<%= productos[i].thumbnail %>></img>
+                <h2 class="fw-bold"><%= productos[i].title %></h2>
+                <h2><%= productos[i].price %></h2>
+            </li>
+        <% } %>
+    </ul>
+    <form action="/" class="d-flex justify-content-center mt-3">
+        <input type="submit" value="Volver" class="btn btn-primary">
+    </form>
+    </div>
+    <% } %>
+
+<%- include('../layouts/footer.ejs') -%>

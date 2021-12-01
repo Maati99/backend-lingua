@@ -1,0 +1,26 @@
+{{#unless productos}}
+    <div class="alert alert-warning" role="alert">
+        No se encontraron productos
+    </div>
+    <form action="/" class="d-flex justify-content-center mt-3">
+        <input type="submit" value="Volver" class="btn btn-primary">
+    </form>
+{{/unless}}
+
+{{#if productos}}
+    <div class="container">
+        <h1 class="text-center text-danger">PRODUCTOS</h1>
+     <ul class="list-group">
+        {{#each productos}}
+        <li class="list-group-item">
+        <img class="card-img-top w-25" src={{this.thumbnail}}>
+        <h2> {{this.title}}</h2>
+        <h2> ${{this.price}}</h2>
+        </li>
+        {{/each}}
+     </ul>
+     <form action="/" class="d-flex justify-content-center mt-3">
+     <input type="submit" value="Volver" class="btn btn-primary">
+     </form>
+    </div>
+{{/if}}

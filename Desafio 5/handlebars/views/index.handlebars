@@ -1,0 +1,26 @@
+<h1 class="text-center text-danger">BIENVENIDO</h1>
+
+<div class="d-flex flex-row justify-content-center">
+    <div class="container">
+        <form id="productos" action="/productos" method="post">
+                <h3 class="text-info text-center">INGRESA EL PRODUCTO QUE DESEES AGREGAR</h3>
+            <div class="row">
+                <input type="text" name="title" placeholder="Titulo" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input type="number" name="price" placeholder="Precio" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input type="text" name="thumbnail" placeholder="Url de la Imagen" class="form-control" required>
+            </div>
+        <br>
+            <div class="d-flex flex-row justify-content-center">
+                <input type="submit" value="Guardar" class="btn btn-primary">
+            </div>
+        </form>
+        <form action="/productos" class="d-flex justify-content-center mt-3">
+            <input type="submit" value="Ir a productos" class="btn btn-primary">
+        </form>
+</div>
