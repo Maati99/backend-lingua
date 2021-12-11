@@ -1,0 +1,148 @@
+<h1 class="text-center text-danger" id="nombre"></h1>
+
+<div class="d-flex flex-row justify-content-center">
+    <div class="container">
+        <form id="formProducto" action="/" method="post">
+                <h3 class="text-info text-center">INGRESA EL PRODUCTO QUE DESEES AGREGAR</h3>
+            <div class="row">
+                <input id="idTitle" type="text" name="title" placeholder="Titulo" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input id="idPrice" type="number" name="price" placeholder="Precio" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input id="idThumbnail" type="text" name="thumbnail" placeholder="Url de la Imagen" class="form-control" required>
+            </div>
+        <br>
+            <div class="d-flex flex-row justify-content-center">
+                <input type="submit" value="Guardar" class="btn btn-primary">
+            </div>
+        </form>
+<div class="row">
+    <div class="col-6">
+        <h2>Productos</h2>
+        <br>
+
+        <div id="noHayProductos" class="alert alert-warning" role="alert">
+            No se encontraron productos
+        </div>
+
+        <ul id="listaProductos" class="list-group">
+        </ul>
+    </div>
+    <div class="col-6">
+        <h2>Chat</h2>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <input id="idCorreo" class="form-control" placeholder="Ingrese su E-mail" type="email"/>
+            </div>
+        </div>
+        <div class="row">
+            <div id="divChat" class="col-12">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-11">
+                <input id="idMensaje" class="form-control" placeholder="Ingrese su mensaje" type="text"/>
+            </div>
+            <div class="col-1">
+                <button id="btnEnviar" class="btn btn-primary" type="button">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let nombre = () => {
+    let name = prompt("Ingrese su nombre")
+    if (name === "" || name === null) {
+        document.getElementById("nombre").innerHTML = "Bienvenido anonimo"
+      }else{
+          document.getElementById("nombre").innerHTML ="Bienvenido " + name
+      }
+}
+nombre()
+
+    let noHayProductos = document.getElementById("noHayProductos");
+    let listaProductos = document.getElementById("listaProductos");
+    let formProducto = document.getElementById("formProducto");
+    let idTitle = document.getElementById("idTitle");
+    let idPrice = document.getElementById("idPrice");
+    let idThumbnail = document.getElementById("idThumbnail");
+    let idCorreo = document.getElementById("idCorreo");
+    let idMensaje = document.getElementById("idMensaje");
+    let btnEnviar = document.getElementById("btnEnviar");
+    let divChat = document.getElementById("divChat");
+
+try{
+let socket = io();
+socket.on("escuchar_productos", productos=>{
+    if(productos.length > 0){
+        noHayProductos.style = 'display:none';
+        listaProductos.style = 'display:block';
+        let productosString = '';
+        productos.forEach(function(producto){
+            productosString += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Producto: ${producto.title}</div>
+                                        Precio: ${producto.price}
+                                    </div>
+                                    <img src="${producto.thumbnail}" style='height:50px;'></img>
+                                </li>`;
+        });
+        listaProductos.innerHTML = productosString;
+    }else{
+        noHayProductos.style = 'display:block';
+        listaProductos.style = 'display:none';
+    }
+})
+socket.on("escuchar_mensajes", mensajes=>{
+    console.log("escuchando mensajes")
+    divChat.innerHTML= '';
+    let mensajesString = '';
+    mensajes.forEach(function(mensaje){
+        mensajesString += `<p style='padding:0px;margin:0px;'>
+                                <span style='color:blue'>${mensaje.correo}</span>
+                                <span style='color:red'>[${mensaje.fecha}]:</span>
+                                <span style='color:green'>${mensaje.mensaje}</span>
+                           </p>`;
+    });
+    divChat.innerHTML = mensajesString;
+})
+formProducto.addEventListener('submit', function(e){
+    e.preventDefault();
+    let title = idTitle.value;
+    let price = idPrice.value;
+    let thumbnail = idThumbnail.value;
+    socket.emit("producto", {title, price, thumbnail});
+    limpiarForm();
+})
+btnEnviar.addEventListener('click', function(e){
+    e.preventDefault();
+    let correo = idCorreo.value;
+    let fecha = new Date();
+    let mensaje = idMensaje.value;
+    if(correo.trim().length == 0){
+        alert("Debe ingresar un correo")
+        return;
+    }
+    if(mensaje.trim().length == 0){
+        alert("Debe ingresar un mensaje")
+        return;
+    }
+    let mensajeEnviar = {
+        correo,
+        fecha: `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`,
+        mensaje
+    }
+    socket.emit("mensaje", mensajeEnviar);
+    idMensaje.value = "";
+    idMensaje.focus();
+})
+}catch(err){
+console.log(err)
+}
+</script>
