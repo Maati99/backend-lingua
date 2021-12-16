@@ -1,0 +1,30 @@
+<h1 class="text-center text-danger">PRODUCTOS</h1>
+
+<div class="d-flex flex-row justify-content-center">
+    <div class="container">
+        <form id="productos" action="/productos" method="post">
+                <h3 class="text-info text-center">INGRESA EL PRODUCTO QUE DESEES AGREGAR</h3>
+            <div class="row">
+                <input type="text" name="nombre" placeholder="Titulo" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input type="number" name="precio" placeholder="Precio" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input type="text" name="foto" placeholder="Url de la Imagen" class="form-control" required>
+            </div>
+        <br>
+            <div class="row">
+                <input type="text" name="descripcion" placeholder="Descripcion" class="form-control" required>
+            </div>
+        <br>
+            <div class="d-flex flex-row justify-content-center">
+                <input type="submit" value="Guardar" class="btn btn-primary">
+            </div>
+        </form>
+            <div class="d-flex flex-row justify-content-center">
+                <a class="btn btn-primary m-3" href="api/productos">Ir a productos</a>
+            </div>
+</div>

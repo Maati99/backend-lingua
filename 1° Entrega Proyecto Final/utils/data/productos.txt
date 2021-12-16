@@ -1,0 +1,12 @@
+[
+  {
+    "id": "8d001ad2-14ba-4267-a844-33738b193d93",
+    "timestamp": 1639612664561,
+    "borrado": false
+  },
+  {
+    "id": "9ee96638-858a-4498-820f-17d909ec843a",
+    "timestamp": 1639612675663,
+    "borrado": false
+  }
+]
