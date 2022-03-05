@@ -1,0 +1,76 @@
+ - Servidor corrido con nodemon en modo FORK por dafault (npm run dev)
+
+ - Testeada la ejecución del proceso en modo FORK con ---> tasklist /fi "imagename eq node.exe"
+
+        Nombre de imagen               PID Nombre de sesión Núm. de ses Uso de memor
+        ========================= ======== ================ =========== ============
+        node.exe                     16968 Console                    1    24.964 KB
+        node.exe                     19896 Console                    1    77.388 KB
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Con nodemon instalado de manera global se ejecuto el servidor en modo CLUSTER ----> nodemon server.js -m CLUSTER
+
+- Testeada la ejecución del proceso en modo FORK con ---> tasklist /fi "imagename eq node.exe"
+        Nombre de imagen               PID Nombre de sesión Núm. de ses Uso de memor
+        ========================= ======== ================ =========== ============
+        node.exe                     11500 Console                    1    25.716 KB
+        node.exe                     11780 Console                    1    53.932 KB
+        node.exe                     13500 Console                    1    53.636 KB
+        node.exe                     13536 Console                    1    53.088 KB
+        node.exe                     15728 Console                    1    53.312 KB
+        node.exe                      5732 Console                    1    53.332 KB
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Utilizando forever de manera global se ejecuto el comando -----> forever start server.js
+
+- Se corroboro que el proceso esta corriendo con ----> forever list
+
+(node:9648) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9648) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+info:    Forever processes running
+data:        uid  command                            script                                                                          forever pid  id logfile                           uptime
+data:    [0] b337 "C:\Program Files\nodejs\node.exe" C:\Users\Matias\Escritorio\Proyecto Final Backend - Lingua\Desafio 13\server.js 17716   3496    C:\Users\Matias\.forever\b337.log 0:0:0:58.288
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Iniciado el servidor en modo FORK con pm2 -----> pm2 start server.js --name="ServerMati"
+
+┌─────┬───────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name          │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼───────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ ServerMati    │ default     │ 1.0.0   │ fork    │ 14600    │ 4s     │ 0    │ online    │ 26.5%    │ 28.2mb   │ Matias   │ disabled │
+└─────┴───────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+
+- Iniciado el servidor en modo CLUSTER con pm2 ------> pm2 start server.js --name="ServerMati8081" -i max --watch -- -p 8081
+
+┌─────┬───────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name              │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼───────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ ServerMati        │ default     │ 1.0.0   │ fork    │ 14516    │ 4m     │ 0    │ online    │ 1.1%     │ 54.7mb   │ Matias   │ disabled │
+│ 3   │ ServerMati8081    │ default     │ 1.0.0   │ cluster │ 15432    │ 0      │ 1    │ stopping  │ 0%       │ 0b       │ Matias   │ enabled  │
+│ 4   │ ServerMati8081    │ default     │ 1.0.0   │ cluster │ 2776     │ 0      │ 1    │ stopping  │ 0%       │ 0b       │ Matias   │ enabled  │
+│ 5   │ ServerMati8081    │ default     │ 1.0.0   │ cluster │ 14976    │ 0      │ 0    │ stopping  │ 0%       │ 0b       │ Matias   │ enabled  │
+│ 6   │ ServerMati8081    │ default     │ 1.0.0   │ cluster │ 10708    │ 5s     │ 0    │ online    │ 38.6%    │ 43.0mb   │ Matias   │ enabled  │
+└─────┴───────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+
+- Ejecutado el monitor de pm2 para corroborar su uso de memoria y CPU con -----> pm2 monit
+
+┌─ Process List ───────────────────────────────────┐┌──  ServerMati Logs  ────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│[ 0] ServerMati     Mem:  54 MB    CPU:  0 %  onl ││                                                                                                                         │
+│[ 3] ServerMati8081     Mem:   0 MB    CPU:  0 %  ││                                                                                                                         │
+│[ 4] ServerMati8081     Mem:   0 MB    CPU:  0 %  ││                                                                                                                         │
+│[ 5] ServerMati8081     Mem:   0 MB    CPU:  0 %  ││                                                                                                                         │
+│[ 6] ServerMati8081     Mem:   0 MB    CPU:  0 %  ││                                                                                                                         │
+│                                                  ││                                                                                                                         │
+└──────────────────────────────────────────────────┘└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌─ Custom Metrics ─────────────────────────────────┐┌─ Metadata ──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Used Heap Size                        23.46 MiB  ││ App Name              ServerMati                                                                                        │
+└──────────────────────────────────────────────────┘└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+- Iniciado el servidor en modo fork en el puerto 8082 ----> pm2 start server.js --name="ServerMati8082" --watch -- -p 8082
+- Iniciado el servidor en modo cluster en el puerto 8083 ----> pm2 start server.js --name="ServerMati8081" -i max --watch -- -p 8083
+- Iniciado el servidor en modo fork en el puerto 8084 ----> pm2 start server.js --name="ServerMati8082" --watch -- -p 8084
+- Iniciado el servidor en modo cluster en el puerto 8085 ----> pm2 start server.js --name="ServerMati8081" -i max --watch -- -p 8085
