@@ -1,0 +1,35 @@
+{
+  "name": "proyecto-final-backend---lingua",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.4",
+    "express-session": "^1.17.2",
+    "firebase-admin": "^10.0.0",
+    "hbs": "^4.2.0",
+    "joi": "^17.6.0",
+    "mongoose": "^6.2.5",
+    "nodemailer": "^6.7.2",
+    "os": "^0.1.2",
+    "passport": "^0.5.0",
+    "passport-local": "^1.0.0",
+    "twilio": "^3.72.0",
+    "winston": "^3.3.3"
+  }
+}
