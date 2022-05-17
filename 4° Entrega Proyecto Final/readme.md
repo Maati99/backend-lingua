@@ -1,0 +1,2 @@
+- Para correr el proyecto ejecutar el comando "npm i" (sin comillas)
+- Una vez instalado el node_modules ejecutar el comando "npm run dev" (sin comillas) para correr el servidor
